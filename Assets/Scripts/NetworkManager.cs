@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,8 @@ public class NetworkManager : MonoBehaviour
     public static NetworkManager instance;
 
     public GameObject playerPrefab;
-    public GameObject projectilePrefab;
+    public GameObject fireballPrefab;
+
 
     private void Awake()
     {
@@ -44,9 +46,15 @@ public class NetworkManager : MonoBehaviour
         return Instantiate(playerPrefab, new Vector3(0f, 25f, 0f), Quaternion.identity).GetComponent<RigidbodyPlayer>();
     }
 
-    public Fireball InstantiateProjectile(Transform _shootOrigin)
+    public Fireball FireballInit(Transform _shootOrigin)
     {
         Debug.Log("Fireball shot!");
-        return Instantiate(projectilePrefab, _shootOrigin.position + _shootOrigin.forward * 0.7f, Quaternion.identity).GetComponent<Fireball>();
+        return Instantiate(fireballPrefab, _shootOrigin.position + _shootOrigin.forward * 0.7f, Quaternion.identity).GetComponent<Fireball>();
+    }
+
+    public BasicAttackProjectile BasicAttackInit(Transform _shootOrigin, GameObject basicAttackPrefab)
+    {
+        Debug.Log("Fireball shot!");
+        return Instantiate(basicAttackPrefab, _shootOrigin.position + _shootOrigin.forward * 0.7f, Quaternion.identity).GetComponent<BasicAttackProjectile>();
     }
 }

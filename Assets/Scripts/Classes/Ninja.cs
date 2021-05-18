@@ -2,7 +2,7 @@
 
 public class Ninja : ClassBase
 {
-    public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition) //Melee Swing
+    public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition, Transform shootOrigin) //Melee Swing
     {
         throw new System.NotImplementedException();
     }

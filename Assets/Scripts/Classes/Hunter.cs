@@ -2,7 +2,7 @@
 
 public class Hunter : ClassBase
 {
-    public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition) //Ranged shot
+    public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition, Transform shootOrigin) //Ranged shot
     {
         throw new System.NotImplementedException();
     }

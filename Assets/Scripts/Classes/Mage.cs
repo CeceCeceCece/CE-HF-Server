@@ -13,7 +13,7 @@ public class Mage : ClassBase
 
 
     private bool isFireballOnCD = false;
-    public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition) //NEEDS REWRITE
+    public  void BasicAttackOriginal(Vector3 viewDirection, Vector3 shootPosition) //NEEDS REWRITE
     {
         if (health <= 0) return;
 
@@ -48,6 +48,22 @@ public class Mage : ClassBase
         }
     }
 
+    public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition, Transform shootOrigin)
+    {
+        if (health <= 0f)
+        {
+            return;
+        }
+        if (!isBasicAttackOnCD)
+        {
+
+            var metrics = CalculateBasicAttackMetrics();
+            NetworkManager.instance.BasicAttackInit(shootOrigin, basicAttackPrefab).Initialize(viewDirection, basicAttackProjectileForce, PlayerID, CalculateDamage(basicAttackDamage, metrics.Item2, criticalStrikeChance), metrics.Item1, basicAttackDamageType);
+            isBasicAttackOnCD = true;
+            Invoke(nameof(ResetBasicAttackCD), basicAttackCD * CooldownReduction);
+        }
+    }
+
     public override void Spell1(Vector3 viewDirection, Transform shootOrigin) //Fireball
     {
         if (health <= 0f)
@@ -56,7 +72,7 @@ public class Mage : ClassBase
         }
         if (!isFireballOnCD)
         {
-            NetworkManager.instance.InstantiateProjectile(shootOrigin).Initialize(viewDirection, fireballThrowForce, PlayerID, CalculateDamage(magicalDamage, magicalDamageMultiplier, criticalStrikeChance), fireballExplosionForce, fireballExplosionRadius);
+            NetworkManager.instance.FireballInit(shootOrigin).Initialize(viewDirection, fireballThrowForce, PlayerID, CalculateDamage(magicalDamage, magicalDamageMultiplier, criticalStrikeChance), fireballExplosionForce, fireballExplosionRadius, resistancePenetration);
             isFireballOnCD = true;
             Invoke(nameof(ResetFireballCD), fireballCD * CooldownReduction);
         }

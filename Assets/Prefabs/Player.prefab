@@ -190,7 +190,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAmount: 0
   maxItemAmount: 3
-  moveSpeed: 8000
   grounded: 0
   whatIsGround:
     serializedVersion: 2
@@ -247,15 +246,24 @@ MonoBehaviour:
   maxHealth: 1000
   armor: 0
   resistance: 50
+  shieldedAmount: 0
+  maxShieldedAmount: 200
   armorPenetration: 0
   resistancePenetration: 0
   physicalDamage: 200
-  magicDamage: 500
+  magicalDamage: 300
   basicAttackDamage: 50
+  basicAttackProjectileForce: 2000
   basicAttackDamageType: 3
+  basicAttackCD: 1
+  isBasicAttackOnCD: 0
   physicalDamageMultiplier: 1
   magicalDamageMultiplier: 1
-  maximumMovementSpeed: 20
-  cooldownReduction: 0
+  movementSpeedMultiplier: 1
+  basicAttackPrefab: {fileID: 9003261974090750088, guid: cbb6d688b9d0e6949b9507b3a854139b,
+    type: 3}
+  criticalStrikeChance: 0.5
   fireballCD: 1
   fireballThrowForce: 3000
+  fireballExplosionForce: 10
+  fireballExplosionRadius: 10

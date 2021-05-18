@@ -2,7 +2,7 @@
 
 public class Warrior : ClassBase
 {
-    public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition) //Melee Cleave
+    public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition, Transform shootOrigin) //Melee Cleave
     {
         throw new System.NotImplementedException();
     }

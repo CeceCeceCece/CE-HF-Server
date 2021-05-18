@@ -221,9 +221,9 @@ public class ServerSend
             SendTCPDataToAll(_packet);
         }
     }
-    public static void SpawnProjectile(Fireball _projectile, int _thrownByPlayer)
+    public static void SpawnFireball(Fireball _projectile, int _thrownByPlayer)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.spawnProjectile))
+        using (Packet _packet = new Packet((int)ServerPackets.spawnFireball))
         {
             _packet.Write(_projectile.id);
             _packet.Write(_projectile.transform.position);
@@ -233,9 +233,9 @@ public class ServerSend
         }
     }
 
-    public static void ProjectilePosition(Fireball _projectile)
+    public static void FireballPosition(Fireball _projectile)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.projectilePosition))
+        using (Packet _packet = new Packet((int)ServerPackets.fireballPosition))
         {
             _packet.Write(_projectile.id);
             _packet.Write(_projectile.transform.position);
@@ -244,9 +244,44 @@ public class ServerSend
         }
     }
 
-    public static void ProjectileExploded(Fireball _projectile)
+    public static void FireballExploded(Fireball _projectile)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.projectileExploded))
+        using (Packet _packet = new Packet((int)ServerPackets.fireballExploded))
+        {
+            _packet.Write(_projectile.id);
+            _packet.Write(_projectile.transform.position);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+
+    public static void SpawnBasicAttack(BasicAttackProjectile _projectile, int _thrownByPlayer)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.spawnBasicAttack))
+        {
+            _packet.Write(_projectile.id);
+            _packet.Write(_projectile.transform.position);
+            _packet.Write(_thrownByPlayer);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    public static void BasicAttackPosition(BasicAttackProjectile _projectile)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.basicAttackPosition))
+        {
+            _packet.Write(_projectile.id);
+            _packet.Write(_projectile.transform.position);
+
+            SendUDPDataToAll(_packet);
+        }
+    }
+
+    public static void BasicAttackHit(BasicAttackProjectile _projectile)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.basicAttackHit))
         {
             _packet.Write(_projectile.id);
             _packet.Write(_projectile.transform.position);

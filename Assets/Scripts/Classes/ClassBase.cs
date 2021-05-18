@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public abstract class ClassBase : MonoBehaviour
 {
@@ -31,8 +32,11 @@ public abstract class ClassBase : MonoBehaviour
 
 
     [Space]
-
+    public float basicAttackProjectileForce;
     public int basicAttackDamageType;
+    public float basicAttackCD = 1f;
+
+    public bool isBasicAttackOnCD = false;
 
     public float physicalDamageMultiplier = 1f;
     public float magicalDamageMultiplier = 1f;
@@ -41,6 +45,8 @@ public abstract class ClassBase : MonoBehaviour
     private float maximumMovementSpeed = 20f;
     private float moveSpeed = 4500;
     private float cooldownReduction = 1f;
+
+    public GameObject basicAttackPrefab;
 
 
     [Range(0f, 1f)]
@@ -52,7 +58,7 @@ public abstract class ClassBase : MonoBehaviour
     public float MoveSpeed { get => moveSpeed * movementSpeedMultiplier; set => moveSpeed = value; }
     public float CooldownReduction { get => cooldownReduction; set => cooldownReduction = 1-value; }
 
-    public abstract void BasicAttack(Vector3 viewDirection, Vector3 shootPosition);
+    public abstract void BasicAttack(Vector3 viewDirection, Vector3 shootPosition, Transform shootOrigin);
     public abstract void SpecialAttack(Vector3 viewDirection, Vector3 shootPosition);
     public abstract void Spell1(Vector3 viewDirection, Transform shootPosition);
     public abstract void Spell2(Vector3 viewDirection, Transform shootPosition);
@@ -99,14 +105,43 @@ public abstract class ClassBase : MonoBehaviour
 
     public float CalculateDamage(float damageAmount, float multiplier, float criticalStrikeChance)
     {
-        var rolledRandom = Random.Range(0f, 1f);
+        var rolledRandom = UnityEngine.Random.Range(0f, 1f);
         if (rolledRandom <= criticalStrikeChance)
         {
-            return damageAmount * multiplier * 2;
             Debug.Log("Critical Hit!");
+            return damageAmount * multiplier * 2;
+           
         }
         else
             return damageAmount * multiplier;
+    }
+
+    public void ResetBasicAttackCD()
+    {
+        isBasicAttackOnCD = false;
+    }
+
+    public  Tuple<float, float> CalculateBasicAttackMetrics()
+    {
+        var penetration = 0f;
+        var multiplier = 1f;
+        if (basicAttackDamageType == (int)DamageType.Physical)
+        {
+            penetration = armorPenetration;
+            multiplier = physicalDamageMultiplier;
+        }
+        else if (basicAttackDamageType == (int)DamageType.Magical)
+        {
+            penetration = resistancePenetration;
+            multiplier = magicalDamageMultiplier;
+        }
+        else if (basicAttackDamageType == (int)DamageType.Unmitigateable)
+        {
+            penetration = 100f;
+            multiplier = physicalDamageMultiplier * magicalDamageMultiplier;
+        }
+
+        return new Tuple<float, float>(penetration, multiplier);
     }
 
 

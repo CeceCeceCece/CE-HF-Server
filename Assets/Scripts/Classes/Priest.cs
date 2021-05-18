@@ -2,7 +2,7 @@
 
 public class Priest : ClassBase
 {
-    public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition) //Ranged stuff
+    public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition, Transform shootOrigin) //Ranged stuff
     {
         throw new System.NotImplementedException();
     }

@@ -14,6 +14,7 @@ public class Fireball : MonoBehaviour
     public float explosionRadius;
     public float damage;
     public float explosionForce;
+    public float resistancePenetration;
     public int damageType = (int)DamageType.Magical;
 
     private void Start()
@@ -22,7 +23,7 @@ public class Fireball : MonoBehaviour
         nextProjectileId++;
         fireballs.Add(id, this);
 
-        ServerSend.SpawnProjectile(this, thrownByPlayer);
+        ServerSend.SpawnFireball(this, thrownByPlayer);
 
         rigidBody.AddForce(initialForce);
         StartCoroutine(ExplodeAfterTime());
@@ -30,7 +31,7 @@ public class Fireball : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ServerSend.ProjectilePosition(this);
+        ServerSend.FireballPosition(this);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -43,18 +44,20 @@ public class Fireball : MonoBehaviour
         Explode();
     }
 
-    public void Initialize(Vector3 _initialMovementDirection, float _initialForceStrength, int _thrownByPlayer, float _damage, float _explosionForce, float _explosionRadius)
+    public void Initialize(Vector3 _initialMovementDirection, float _initialForceStrength, int _thrownByPlayer, float _damage, float _explosionForce, float _explosionRadius, float _resistancePenetration)
     {
         initialForce = _initialMovementDirection * _initialForceStrength;
         thrownByPlayer = _thrownByPlayer;
         damage = _damage;
         explosionForce = _explosionForce;
         explosionRadius = _explosionRadius;
+        resistancePenetration = _resistancePenetration;
+
     }
 
     private void Explode()
     {
-        ServerSend.ProjectileExploded(this);
+        ServerSend.FireballExploded(this);
 
         Collider[] _colliders = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider _collider in _colliders)
@@ -63,7 +66,7 @@ public class Fireball : MonoBehaviour
             {
                 if (thrownByPlayer != _collider.GetComponent<RigidbodyPlayer>().id)
                 {
-                    _collider.GetComponent<RigidbodyPlayer>().TakeDamage(damage, damageType, 0f);
+                    _collider.GetComponent<RigidbodyPlayer>().TakeDamage(damage, damageType, resistancePenetration);
                     var rb = _collider.GetComponent<Rigidbody>();
                     if (rb != null)
                     {

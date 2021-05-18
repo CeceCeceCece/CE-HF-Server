@@ -267,7 +267,7 @@ public class RigidbodyPlayer : MonoBehaviour
     }
     public void BasicAttack(Vector3 viewDirection)
     {
-        CharacterType.BasicAttack(viewDirection, shootOrigin.position);
+        CharacterType.BasicAttack(viewDirection, shootOrigin.position, shootOrigin);
        
     }
     public void TakeDamage(float amount, int damageType, float penetration)
