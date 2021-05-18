@@ -80,6 +80,7 @@ public class ServerSend
         }
     }
 
+   
 
     public static void PlayerPosition(Player _player)
     {
@@ -299,6 +300,24 @@ public class ServerSend
    
             _packet.Write(position);
 
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    public static void IceBlockCasted(int playerID)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.IceBlockCasted))
+        {
+            _packet.Write(playerID);
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    public  static void IceBlockEnded(int playerID)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.IceBlockEnded))
+        {
+            _packet.Write(playerID);
             SendTCPDataToAll(_packet);
         }
     }

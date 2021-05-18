@@ -21,7 +21,9 @@ public enum ServerPackets
     spawnBasicAttack,
     basicAttackPosition,
     basicAttackHit,
-    blastWaveCasted
+    blastWaveCasted,
+    IceBlockEnded,
+    IceBlockCasted
 }
 
 /// <summary>Sent from client to server.</summary>
@@ -32,7 +34,8 @@ public enum ClientPackets
     basicAttack,
     spell1,
     spell2,
-    specialAttack
+    specialAttack,
+    spell3
 }
 
 public class Packet : System.IDisposable

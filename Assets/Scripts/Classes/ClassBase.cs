@@ -48,6 +48,11 @@ public abstract class ClassBase : MonoBehaviour
 
     public GameObject basicAttackPrefab;
 
+    public bool isImmuneToDamage = false;
+    public bool isMovementLocked = false;
+    public bool isStunned = false;
+    public bool IsDead { get => health <= 0f;}
+
 
     [Range(0f, 1f)]
     public float criticalStrikeChance = 0.1f;
@@ -81,7 +86,8 @@ public abstract class ClassBase : MonoBehaviour
     }
 
     public void TakeDamage(float amount, int damageType, float penetration)
-    { 
+    {
+        if (isImmuneToDamage) return;
         shieldedAmount -= DamageTaken(amount, damageType, penetration); 
         if(shieldedAmount < 0f)
         {
@@ -144,8 +150,5 @@ public abstract class ClassBase : MonoBehaviour
         return new Tuple<float, float>(penetration, multiplier);
     }
 
-
-
-
-
+    public bool IsSpellcastAvailable => !(IsDead || isStunned);
 }

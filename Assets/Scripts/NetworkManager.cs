@@ -63,4 +63,16 @@ public class NetworkManager : MonoBehaviour
         Debug.Log("Blast Wave casted!");
         ServerSend.BlastWaveCasted(position);
     }
+
+    public void IceBlockCasted(int playerID)
+    {
+        Debug.Log($"Ice Block Casted by {playerID}!");
+        ServerSend.IceBlockCasted(playerID);
+    }
+
+    public void IceBlockEnded(int playerID)
+    {
+        Debug.Log($"Ice Block Ended on {playerID}!");
+        ServerSend.IceBlockEnded(playerID);
+    }
 }

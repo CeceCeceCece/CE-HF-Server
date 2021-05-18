@@ -104,7 +104,10 @@ public class RigidbodyPlayer : MonoBehaviour
         //Move(_inputDirection);
     }
 
-   
+    public void Spell3()
+    {
+        CharacterType.Spell3(transform.position, shootOrigin);
+    }
 
     private void Move()
     {

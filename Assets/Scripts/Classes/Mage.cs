@@ -22,17 +22,23 @@ public class Mage : ClassBase
     public float blastForce = 500f;
 
 
+    [Header("Ice Block - Spell3:")]
+    public float iceBlockCD = 10f;
+    private bool isIceBlockOnCD = false;
+    public float iceBlockDuration = 10f;
+    public bool isIceBlocked = false;
+   
+
+
     [Header("Special Attack - Blink")]
     public float blinkDistance = 20f;
     public float blinkCD = 2f;
     public bool isBlinkOnCD = false;
+    public new bool IsSpellcastAvailable => !(IsDead || isStunned ||isIceBlocked);
 
     public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition, Transform shootOrigin)
     {
-        if (health <= 0f)
-        {
-            return;
-        }
+        if (!IsSpellcastAvailable) return;
         if (!isBasicAttackOnCD)
         {
 
@@ -45,10 +51,7 @@ public class Mage : ClassBase
 
     public override void Spell1(Vector3 viewDirection, Transform shootOrigin) //Fireball
     {
-        if (health <= 0f)
-        {
-            return;
-        }
+        if (!IsSpellcastAvailable) return;
         if (!isFireballOnCD)
         {
             NetworkManager.instance.FireballInit(shootOrigin).Initialize(viewDirection, fireballThrowForce, PlayerID, CalculateDamage(magicalDamage, magicalDamageMultiplier, criticalStrikeChance), fireballExplosionForce, fireballExplosionRadius, resistancePenetration);
@@ -75,10 +78,7 @@ public class Mage : ClassBase
     }
     public override void SpecialAttack(Vector3 viewDirection, Vector3 shootPosition) //Blink
     {
-        if (health <= 0f)
-        {
-            return;
-        }
+        if (!IsSpellcastAvailable) return;
         if (!isBlinkOnCD)
         {
             var teleportVector = viewDirection.normalized * blinkDistance;
@@ -88,7 +88,7 @@ public class Mage : ClassBase
             while(!isNewPosValid)
             {
                 Collider[] _colliders = Physics.OverlapSphere(testposition, 0.49f);
-                if (_colliders.Length != 0 || testposition.y <= 0f)
+                if (_colliders.Length != 0 || testposition.y <= -1f)
                 {
                     testposition -= viewDirection.normalized;
                 }
@@ -110,10 +110,7 @@ public class Mage : ClassBase
     {
 
 
-        if (health <= 0f)
-        {
-            return;
-        }
+        if (!IsSpellcastAvailable) return;
         if (!isBlastWaveOnCD)
         {
             NetworkManager.instance.BlastWaveCasted(transform.position);
@@ -154,7 +151,37 @@ public class Mage : ClassBase
 
     public override void Spell3(Vector3 viewDirection, Transform shootPosition) //Ice Block
     {
-        throw new System.NotImplementedException();
+        if (IsDead) return;
+
+        if (!isIceBlockOnCD)
+        {
+            NetworkManager.instance.IceBlockCasted(PlayerID);
+            isIceBlockOnCD = true;
+            isIceBlocked = true;
+            isImmuneToDamage = true;
+            isMovementLocked = true;
+            GetComponent<Rigidbody>().isKinematic = true;
+            Invoke(nameof(ResetIceBlockCD), iceBlockCD * CooldownReduction);
+            Invoke(nameof(RemoveIceBlockEffect), iceBlockDuration);
+        }
+        else RemoveIceBlockEffect();
+    }
+
+    private void ResetIceBlockCD()
+    {
+        isIceBlockOnCD = false;
+    }
+
+    private void RemoveIceBlockEffect()
+    {
+        isImmuneToDamage = false;
+        isMovementLocked = false;
+        isIceBlocked = false;
+        isStunned = false;
+        GetComponent<Rigidbody>().isKinematic = false;
+        NetworkManager.instance.IceBlockEnded(PlayerID);
+
+
     }
 }
 

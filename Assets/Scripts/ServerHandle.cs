@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ServerHandle
 {
@@ -54,6 +55,12 @@ public class ServerHandle
         Vector3 _direction = _packet.ReadVector3();
         Server.clients[_fromClient].rbplayer.SpecialAttack(_direction);
         Debug.Log($"{_fromClient} special");
+    }
+
+    public static void Spell3(int _fromClient, Packet _packet)
+    {
+        Server.clients[_fromClient].rbplayer.Spell3();
+        Debug.Log($"{_fromClient} spell3");
     }
 }
 
