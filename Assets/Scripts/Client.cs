@@ -213,10 +213,11 @@ public class Client
         }
     }*/
 
-    public void SendIntoGame(string _playerName)
+    public void SendIntoGame(string _playerName, int _class)
     {
-        rbplayer = NetworkManager.instance.InstantiateRigidbodyPlayer();
-        rbplayer.Initialize(id, _playerName);
+        string classText = "";
+        rbplayer = NetworkManager.instance.InstantiateRigidbodyPlayer(_class, out classText);
+        rbplayer.Initialize(id, _playerName, classText);
 
         foreach (Client _client in Server.clients.Values)
         {

@@ -52,16 +52,19 @@ public class RigidbodyPlayer : MonoBehaviour
     private float yVelocity = 0;
     private bool isDead = false;
 
+    public string classText;
+
 
 
     private void Start()
     {
         
     }
-    public void Initialize(int _id, string _username)
+    public void Initialize(int _id, string _username, string _classText)
     {
         id = _id;
         username = _username;
+        classText = _classText;
        
         rb = GetComponent<Rigidbody>();
         CharacterType = GetComponent<ClassBase>();

@@ -163,9 +163,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3efe4c254d540ae408f584791186aa00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 6079374730952609841, guid: 74e1d879b5b43614d8ed54d836d0bd39,
-    type: 3}
   fireballPrefab: {fileID: 4914364415477365022, guid: 4d8bdd571fe745442a3645696d8f4ede,
+    type: 3}
+  magePrefab: {fileID: 6079374730952609841, guid: 74e1d879b5b43614d8ed54d836d0bd39,
+    type: 3}
+  warriorPrefab: {fileID: 6079374730952609841, guid: f4a3703a49fe7cc4da86ffe5cd4f11e5,
+    type: 3}
+  ninjaPrefab: {fileID: 6079374730952609841, guid: 33f6cbe3c07ea194e80a07255a267e9c,
+    type: 3}
+  priestPrefab: {fileID: 6079374730952609841, guid: 09ba1ceaa80de2a4882893d2b93392bf,
+    type: 3}
+  hunterPrefab: {fileID: 6079374730952609841, guid: a5d48dbfb6fd6b54a893bbc9f3aa225a,
     type: 3}
 --- !u!4 &472596685
 Transform:

@@ -152,9 +152,9 @@ GameObject:
   - component: {fileID: 5329906532639153605}
   - component: {fileID: 7963719711627319652}
   - component: {fileID: 5329662728548119019}
-  - component: {fileID: 7361561479932270984}
+  - component: {fileID: -2055987788823385417}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Warrior
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -200,6 +200,7 @@ MonoBehaviour:
   id: 0
   username: 
   shootOrigin: {fileID: 6793854738395546899}
+  classText: 
 --- !u!54 &7963719711627319652
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -230,7 +231,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7361561479932270984
+--- !u!114 &-2055987788823385417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,22 +240,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 6079374730952609841}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdedf8ff189033c4195f81099f9aaaac, type: 3}
+  m_Script: {fileID: 11500000, guid: e943e993d363aae429a3888c673826c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 1000
   armor: 0
-  resistance: 50
+  resistance: 0
   shieldedAmount: 0
   maxShieldedAmount: 200
   armorPenetration: 0
   resistancePenetration: 0
-  physicalDamage: 200
-  magicalDamage: 300
-  basicAttackDamage: 50
-  basicAttackProjectileForce: 20
-  basicAttackDamageType: 3
+  physicalDamage: 0
+  magicalDamage: 0
+  basicAttackDamage: 0
+  basicAttackProjectileForce: 0
+  basicAttackDamageType: 0
   basicAttackCD: 1
   isBasicAttackOnCD: 0
   physicalDamageMultiplier: 1
@@ -262,11 +263,7 @@ MonoBehaviour:
   movementSpeedMultiplier: 1
   basicAttackPrefab: {fileID: 9003261974090750088, guid: cbb6d688b9d0e6949b9507b3a854139b,
     type: 3}
-  criticalStrikeChance: 0.5
-  fireballCD: 1
-  fireballThrowForce: 3000
-  fireballExplosionForce: 10000
-  fireballExplosionRadius: 15
-  blastWaveCD: 3
-  blastWaveRadius: 15
-  blastForce: 10000
+  isImmuneToDamage: 0
+  isMovementLocked: 0
+  isStunned: 0
+  criticalStrikeChance: 0.1

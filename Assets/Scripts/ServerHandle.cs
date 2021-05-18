@@ -7,15 +7,16 @@ public class ServerHandle
     {
         int _clientIdCheck = _packet.ReadInt();
         string _username = _packet.ReadString();
+        int _class = _packet.ReadInt();
 
-        Debug.Log($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {_fromClient}.");
+        Debug.Log($"{Server.clients[_fromClient].tcp.socket.Client.RemoteEndPoint} connected successfully and is now player {_fromClient}: \"{_username}\" - class: {_class}.");
         Server.CurrentPlayers++;
         Debug.Log(Server.CurrentPlayers);
         if (_fromClient != _clientIdCheck)
         {
-            Debug.Log($"Player \"{_username}\" (ID: {_fromClient}) has assumed the wrong client ID ({_clientIdCheck})!");
+            Debug.Log($"Player (ID: {_fromClient}) has assumed the wrong client ID ({_clientIdCheck})!");
         }
-        Server.clients[_fromClient].SendIntoGame(_username);
+        Server.clients[_fromClient].SendIntoGame(_username, _class);
     }
 
     public static void PlayerMovement(int _fromClient, Packet _packet)

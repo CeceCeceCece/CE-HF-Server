@@ -143,6 +143,7 @@ public class ServerSend
         {
             _packet.Write(_player.id);
             _packet.Write(_player.username);
+            _packet.Write(_player.classText);
             _packet.Write(_player.transform.position);
             _packet.Write(_player.transform.rotation);
 

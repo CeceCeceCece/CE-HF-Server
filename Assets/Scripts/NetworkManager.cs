@@ -3,12 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class NetworkManager : MonoBehaviour
 {
     public static NetworkManager instance;
 
-    public GameObject playerPrefab;
+    //public GameObject playerPrefab;
     public GameObject fireballPrefab;
+
+    public GameObject magePrefab;
+    public GameObject warriorPrefab;
+    public GameObject ninjaPrefab;
+    public GameObject priestPrefab;
+    public GameObject hunterPrefab;
+
 
 
     private void Awake()
@@ -41,9 +49,39 @@ public class NetworkManager : MonoBehaviour
         return Instantiate(playerPrefab, new Vector3(0f, 25f, 0f), Quaternion.identity).GetComponent<Player>();
     }*/
 
-    public RigidbodyPlayer InstantiateRigidbodyPlayer()
+    public RigidbodyPlayer InstantiateRigidbodyPlayer(int _class, out string classText)
     {
-        return Instantiate(playerPrefab, new Vector3(0f, 25f, 0f), Quaternion.identity).GetComponent<RigidbodyPlayer>();
+        GameObject prefabToBe;
+        switch ((ClassCode)_class)
+        {
+            case ClassCode.Mage:
+                prefabToBe = magePrefab;
+                classText = ClassCode.Mage.ToString();
+                break;
+            case ClassCode.Warrior:
+                prefabToBe = warriorPrefab;
+                classText = ClassCode.Warrior.ToString();
+                break;
+            case ClassCode.Hunter:
+                prefabToBe = hunterPrefab;
+                classText = ClassCode.Hunter.ToString();
+                break;
+            case ClassCode.Priest:
+                prefabToBe = priestPrefab;
+                classText = ClassCode.Priest.ToString();
+                break;
+            case ClassCode.Ninja:
+                prefabToBe = ninjaPrefab;
+                classText = ClassCode.Ninja.ToString();
+                break;
+            default:
+                Console.WriteLine("Invalid class value!");
+                prefabToBe = magePrefab;
+                classText = ClassCode.Mage.ToString();
+                break;
+        }
+       
+        return Instantiate(prefabToBe, new Vector3(0f, 25f, 0f), Quaternion.identity).GetComponent<RigidbodyPlayer>();
     }
 
     public Fireball FireballInit(Transform _shootOrigin)
