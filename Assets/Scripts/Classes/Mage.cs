@@ -22,41 +22,10 @@ public class Mage : ClassBase
     public float blastForce = 500f;
 
 
-
-    public  void BasicAttackOriginal(Vector3 viewDirection, Vector3 shootPosition) //NEEDS REWRITE
-    {
-        if (health <= 0) return;
-
-        if (Physics.Raycast(shootPosition, viewDirection, out RaycastHit hit, 25f))
-        {
-            if (hit.collider.CompareTag("Player"))
-            {
-
-                var penetration = 0f;
-                var multiplier = 1f;
-                if (basicAttackDamageType == (int)DamageType.Physical)
-                {
-                    penetration = armorPenetration;
-                    multiplier = physicalDamageMultiplier;
-                }
-                else if (basicAttackDamageType == (int)DamageType.Magical)
-                {
-                    penetration = resistancePenetration;
-                    multiplier = magicalDamageMultiplier;
-                }
-                else if (basicAttackDamageType == (int)DamageType.Unmitigateable)
-                {
-                    penetration = 100;
-                    multiplier = physicalDamageMultiplier * magicalDamageMultiplier;
-                }
-
-
-                    
-                hit.collider.GetComponent<RigidbodyPlayer>()
-                    .TakeDamage(CalculateDamage(basicAttackDamage, multiplier, criticalStrikeChance), basicAttackDamageType, penetration);
-            }
-        }
-    }
+    [Header("Special Attack - Blink")]
+    public float blinkDistance = 20f;
+    public float blinkCD = 2f;
+    public bool isBlinkOnCD = false;
 
     public override void BasicAttack(Vector3 viewDirection, Vector3 shootPosition, Transform shootOrigin)
     {
@@ -98,10 +67,43 @@ public class Mage : ClassBase
     {
         isFireballOnCD = false;
     }
-    
+
+
+    public void ResetBlinkCD()
+    {
+        isBlinkOnCD = false;
+    }
     public override void SpecialAttack(Vector3 viewDirection, Vector3 shootPosition) //Blink
     {
-        throw new System.NotImplementedException();
+        if (health <= 0f)
+        {
+            return;
+        }
+        if (!isBlinkOnCD)
+        {
+            var teleportVector = viewDirection.normalized * blinkDistance;
+            var rb = GetComponent<Rigidbody>();
+            var testposition = rb.position + teleportVector;
+            var isNewPosValid = false;
+            while(!isNewPosValid)
+            {
+                Collider[] _colliders = Physics.OverlapSphere(testposition, 0.49f);
+                if (_colliders.Length != 0 || testposition.y <= 0f)
+                {
+                    testposition -= viewDirection.normalized;
+                }
+                else
+                    isNewPosValid = true;
+                   
+
+            }
+            rb.position += teleportVector;
+
+
+
+
+
+        }
     }
 
     public override void Spell2(Vector3 viewDirection, Transform shootPosition) //Blast Wave

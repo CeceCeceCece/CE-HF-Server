@@ -104,6 +104,8 @@ public class RigidbodyPlayer : MonoBehaviour
         //Move(_inputDirection);
     }
 
+   
+
     private void Move()
     {
         //Extra gravity
@@ -277,6 +279,11 @@ public class RigidbodyPlayer : MonoBehaviour
         Debug.Log("Basic");
         CharacterType.BasicAttack(viewDirection, shootOrigin.position, shootOrigin);
        
+    }
+
+    public void SpecialAttack(Vector3 direction)
+    {
+        CharacterType.SpecialAttack(direction, shootOrigin.position);
     }
     public void TakeDamage(float amount, int damageType, float penetration)
     {

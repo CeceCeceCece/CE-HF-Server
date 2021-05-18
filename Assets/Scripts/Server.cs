@@ -123,7 +123,8 @@ public class Server
                 { (int)ClientPackets.playerMovement, ServerHandle.PlayerMovement },
                 { (int)ClientPackets.basicAttack, ServerHandle.BasicAttack },
                 { (int)ClientPackets.spell1, ServerHandle.Spell1 },
-                { (int)ClientPackets.spell2, ServerHandle.Spell2 }
+                { (int)ClientPackets.spell2, ServerHandle.Spell2 },
+                { (int)ClientPackets.specialAttack, ServerHandle.SpecialAttack }
             };
         Debug.Log("Initialized packets.");
     }

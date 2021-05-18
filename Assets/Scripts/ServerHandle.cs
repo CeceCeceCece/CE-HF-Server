@@ -48,5 +48,12 @@ public class ServerHandle
         Server.clients[_fromClient].rbplayer.Spell2();
         Debug.Log($"{_fromClient} spell2");
     }
+
+    public static void SpecialAttack(int _fromClient, Packet _packet)
+    {
+        Vector3 _direction = _packet.ReadVector3();
+        Server.clients[_fromClient].rbplayer.SpecialAttack(_direction);
+        Debug.Log($"{_fromClient} special");
+    }
 }
 
