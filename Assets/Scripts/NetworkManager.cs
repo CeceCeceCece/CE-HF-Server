@@ -57,4 +57,10 @@ public class NetworkManager : MonoBehaviour
         Debug.Log("Fireball shot!");
         return Instantiate(basicAttackPrefab, _shootOrigin.position + _shootOrigin.forward * 0.7f, Quaternion.identity).GetComponent<BasicAttackProjectile>();
     }
+
+    public void BlastWaveCasted(Vector3 position)
+    {
+        Debug.Log("Blast Wave casted!");
+        ServerSend.BlastWaveCasted(position);
+    }
 }

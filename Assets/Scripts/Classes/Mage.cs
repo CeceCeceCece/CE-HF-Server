@@ -6,13 +6,23 @@ public class Mage : ClassBase
     [Header("Fireball - Spell1:")]
     [Header("Class Specific:")] 
     public float fireballCD = 1f;
-   
+
     public float fireballThrowForce = 600f;
     public float fireballExplosionForce = 10f;
     public float fireballExplosionRadius = 10f;
 
 
     private bool isFireballOnCD = false;
+
+
+    [Header("Blast Wave - Spell2:")]
+    public float blastWaveCD = 3f;
+    private bool isBlastWaveOnCD = false;
+    public float blastWaveRadius = 5f;
+    public float blastForce = 500f;
+
+
+
     public  void BasicAttackOriginal(Vector3 viewDirection, Vector3 shootPosition) //NEEDS REWRITE
     {
         if (health <= 0) return;
@@ -96,7 +106,48 @@ public class Mage : ClassBase
 
     public override void Spell2(Vector3 viewDirection, Transform shootPosition) //Blast Wave
     {
-        throw new System.NotImplementedException();
+
+
+        if (health <= 0f)
+        {
+            return;
+        }
+        if (!isBlastWaveOnCD)
+        {
+            NetworkManager.instance.BlastWaveCasted(transform.position);
+
+            Collider[] _colliders = Physics.OverlapSphere(transform.position, blastWaveRadius);
+            foreach (Collider _collider in _colliders)
+            {
+                if (_collider.CompareTag("Player"))
+                {
+                    if (PlayerID != _collider.GetComponent<RigidbodyPlayer>().id)
+                    {
+                        _collider.GetComponent<RigidbodyPlayer>().TakeDamage(magicalDamage * magicalDamageMultiplier, (int)DamageType.Magical, resistancePenetration);
+                        var rb = _collider.GetComponent<Rigidbody>();
+                        if (rb != null)
+                        {
+                            rb.AddExplosionForce(blastForce, transform.position, blastWaveRadius, 3f);
+                        }
+                    }
+
+                }
+                /*else if (_collider.CompareTag("Enemy"))
+                {
+                    _collider.GetComponent<Enemy>().TakeDamage(explosionDamage);
+                }*/
+
+
+            }
+            isBlastWaveOnCD = true;
+            Invoke(nameof(ResetBlastWaveCD), blastWaveCD * CooldownReduction);
+        }
+        
+    }
+
+    private void ResetBlastWaveCD()
+    {
+        isBlastWaveOnCD = false;
     }
 
     public override void Spell3(Vector3 viewDirection, Transform shootPosition) //Ice Block

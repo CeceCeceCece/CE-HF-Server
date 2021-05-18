@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ServerSend
 {
@@ -78,6 +79,7 @@ public class ServerSend
             SendTCPData(_toClient, _packet);
         }
     }
+
 
     public static void PlayerPosition(Player _player)
     {
@@ -285,6 +287,17 @@ public class ServerSend
         {
             _packet.Write(_projectile.id);
             _packet.Write(_projectile.transform.position);
+
+            SendTCPDataToAll(_packet);
+        }
+    }
+
+    public static void BlastWaveCasted(Vector3 position)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.blastWaveCasted))
+        {
+   
+            _packet.Write(position);
 
             SendTCPDataToAll(_packet);
         }

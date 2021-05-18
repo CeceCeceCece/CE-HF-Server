@@ -42,5 +42,11 @@ public class ServerHandle
         Server.clients[_fromClient].rbplayer.Spell1(_throwDirection);
         Debug.Log($"{_fromClient} spell1");
     }
+
+    public static void Spell2(int _fromClient, Packet _packet)
+    {
+        Server.clients[_fromClient].rbplayer.Spell2();
+        Debug.Log($"{_fromClient} spell2");
+    }
 }
 

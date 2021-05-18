@@ -259,14 +259,22 @@ public class RigidbodyPlayer : MonoBehaviour
         transform.rotation = _rotation;
     }
 
+    public void Spell2()
+    {
+       
+        CharacterType.Spell2(Vector3.zero, shootOrigin);
+
+    }
+
     public void Spell1(Vector3 _viewDirection)
     {
-        Debug.Log("Basic");
+        Debug.Log("Spell1");
         CharacterType.Spell1(_viewDirection, shootOrigin);
 
     }
     public void BasicAttack(Vector3 viewDirection)
     {
+        Debug.Log("Basic");
         CharacterType.BasicAttack(viewDirection, shootOrigin.position, shootOrigin);
        
     }

@@ -253,7 +253,7 @@ MonoBehaviour:
   physicalDamage: 200
   magicalDamage: 300
   basicAttackDamage: 50
-  basicAttackProjectileForce: 2000
+  basicAttackProjectileForce: 20
   basicAttackDamageType: 3
   basicAttackCD: 1
   isBasicAttackOnCD: 0
@@ -265,5 +265,8 @@ MonoBehaviour:
   criticalStrikeChance: 0.5
   fireballCD: 1
   fireballThrowForce: 3000
-  fireballExplosionForce: 10
-  fireballExplosionRadius: 10
+  fireballExplosionForce: 10000
+  fireballExplosionRadius: 15
+  blastWaveCD: 3
+  blastWaveRadius: 15
+  blastForce: 10000
